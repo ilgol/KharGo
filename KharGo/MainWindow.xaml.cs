@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Windows;
 using KharGo.Strategy;
-using System.Threading;
-using System.ComponentModel;
 
 namespace KharGo
 {
