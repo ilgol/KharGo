@@ -3,8 +3,8 @@
     // инициатор команды
     class Invoker
     {
-        Command command;
-        public void SetCommand(Command c)
+        AbstractCommand command;
+        public void SetCommand(AbstractCommand c)
         {
             command = c;
         }

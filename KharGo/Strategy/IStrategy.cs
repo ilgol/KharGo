@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using KharGo.Command;
 
 namespace KharGo.Strategy
 {
     interface IStrategy
     {
-        List<string> Algorithm(string context);
+        AbstractCommand Algorithm(string context);
     }
 }

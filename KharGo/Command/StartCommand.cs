@@ -3,7 +3,7 @@
 namespace KharGo.Command
 {
     // конкретная команда
-    class StartCommand : Command
+    class StartCommand : AbstractCommand
     {
         private string _exename;
         public StartCommand(string exename)

@@ -69,13 +69,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Command\Command.cs" />
+    <Compile Include="Command\AbstractCommand.cs" />
     <Compile Include="Command\StartCommand.cs" />
     <Compile Include="Command\Invoker.cs" />
-    <Compile Include="Strategy\ComboBoxContext.cs" />
+    <Compile Include="Interpreter.cs" />
+    <Compile Include="Strategy\Context.cs" />
     <Compile Include="Strategy\IStrategy.cs" />
-    <Compile Include="Strategy\ObjectStrategy.cs" />
-    <Compile Include="Strategy\ParameterStrategy.cs" />
+    <Compile Include="Strategy\ActionStrategy.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
