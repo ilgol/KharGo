@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using KharGo.Strategy;
+using KharGo.Command;
 
 namespace KharGo
 {
@@ -14,20 +15,29 @@ namespace KharGo
         {
             InitializeComponent();
         }
-
         private void accept_bt_Click(object sender, RoutedEventArgs e)
         {
-            if (object_cb.Text != "" & param_cb.Text != "")
-            {
-                rules_lb.Items.Add($"{command_cb.Text} {object_cb.Text.ToLower()} {param_cb.Text.ToLower()}");
-            }
-            else
-            {
-                MessageBox.Show("Вы не установили полностью команду!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+            //if (object_cb.Text != "" & param_cb.Text != "")
+            //{
+            //    rules_lb.Items.Add($"{command_cb.Text} {object_cb.Text.ToLower()} {param_cb.Text.ToLower()}");
+
+            //    Invoker invoker = new Invoker();
+            //    StartCommand command = new StartCommand($"{object_cb.Text.ToLower()}.exe");
+            //    invoker.SetCommand(command);
+            //    invoker.Run();
+            //}
+            //else
+            //{
+            //    MessageBox.Show("Вы не установили полностью команду!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            //}
+
+            Invoker invoker = new Invoker();
+            StartCommand command = new StartCommand($"{execute_tb.Text}");
+            invoker.SetCommand(command);
+            invoker.Run();
         }
         private void command_cb_DropDownClosed(object sender, System.EventArgs e)
-        {            
+        {
             cbt = new ComboBoxContext(command_cb.Text);
 
             cbt._object = new ObjectStrategy();
@@ -49,13 +59,11 @@ namespace KharGo
             else
                 param_cb.IsDropDownOpen = true;
         }
-
         private void object_cb_DropDownClosed(object sender, EventArgs e)
         {
             if (param_cb.Items.Count != 1)
                 param_cb.IsDropDownOpen = true;
         }
-
         private void cancel_bt_Click(object sender, RoutedEventArgs e)
         {
             if (rules_lb.SelectedItem != null)            
