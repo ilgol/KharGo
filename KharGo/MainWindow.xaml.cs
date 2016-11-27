@@ -1,7 +1,9 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using KharGo.Strategy;
 using KharGo.Command;
+using KharGo.Intepreter;
+using KharGo.Learning;
+using System.Collections.Generic;
 
 namespace KharGo
 {
@@ -13,17 +15,30 @@ namespace KharGo
         public MainWindow()
         {
             InitializeComponent();
+
+            Dictionary<List<string>, Dictionary<string, bool>> ActionDictionaryList = new Dictionary<List<string>, Dictionary<string, bool>>()
+            { { new List<string> { "skype", "скайп", "скупе", "скаааайп", "скайпе" }, new Dictionary<string,bool> {{ "skype",  true }} },
+            { new List<string> { "open", "старт", "открыть" }, new Dictionary<string, bool> { { "запустить", false } } } };
+
+            MiniAI.AddingItems(ActionDictionaryList);
+            Meaning.Read();
+            Word.Read();
         }
         private void accept_bt_Click(object sender, RoutedEventArgs e)
         {
-            Invoker invoker = new Invoker();
-            Interpreter interpreter = new Interpreter(execute_tb.Text);
+            if (execute_tb.Text != "")
+            {
+                Invoker invoker = new Invoker();
+                Interpreter interpreter = new Interpreter(execute_tb.Text.ToLower());
 
-            Context cbt = new Context(interpreter.Execute());
-            cbt._object = new ActionStrategy();
-            var result = cbt.Execute();
-            invoker.SetCommand(result);
-            invoker.Run();
+                Context cbt = new Context(interpreter.Execute());
+                cbt._object = new ActionStrategy();
+                var result = cbt.Execute();
+                invoker.SetCommand(result);
+                invoker.Run();
+            }
+            else
+               MessageBox.Show("Введите команду!", "Ошибка ввода!", MessageBoxButton.OK, MessageBoxImage.Stop);
         }
         private void cancel_bt_Click(object sender, RoutedEventArgs e)
         {
