@@ -15,10 +15,22 @@ namespace KharGo.Intepreter
     {
         [DataMember]
         private string _word;
-        public Word(string word)
+        [DataMember]
+        private string _type;
+        public Word(string word, string type)
         {
             _word = word;
+            _type = type;
         }
+        public string GetWord()
+        {
+            return _word;
+        }
+        public string GetTypeofWord()
+        {
+            return _type;
+        }
+
         public static void Write()
         {
             DataContractSerializer serialization = new DataContractSerializer(typeof(Dictionary<Guid, Word>));

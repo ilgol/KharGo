@@ -57,6 +57,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -81,6 +82,7 @@
     <Compile Include="Command\Invoker.cs" />
     <Compile Include="Interpreter\Interpreter.cs" />
     <Compile Include="Interpreter\Meaning.cs" />
+    <Compile Include="Interpreter\WordSpeller.cs" />
     <Compile Include="Learning\MiniAI.cs" />
     <Compile Include="Strategy\Context.cs" />
     <Compile Include="Strategy\IStrategy.cs" />

@@ -65,7 +65,11 @@
                 </Grid>
             </TabItem>
             <TabItem Header="Обучение">
-                <Grid Background="White"/>
+                <Grid Background="White">
+                    <ComboBox x:Name="cbAction" HorizontalAlignment="Left" Margin="72,77,0,0" VerticalAlignment="Top" Width="120"/>
+                    <ComboBox x:Name="cbTarget" HorizontalAlignment="Left" Margin="252,77,0,0" VerticalAlignment="Top" Width="120"/>
+                    <ComboBox x:Name="comboBox" HorizontalAlignment="Left" Margin="432,77,0,0" VerticalAlignment="Top" Width="120"/>
+                </Grid>
             </TabItem>
         </TabControl>
     </Grid>
