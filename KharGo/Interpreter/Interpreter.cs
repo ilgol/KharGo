@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Controls;
 using System.Windows.Forms;
+using KharGo;
 
 namespace KharGo.Intepreter
 {
@@ -20,34 +22,68 @@ namespace KharGo.Intepreter
             {
                 Spelling spelling = new Spelling();
                 List<string> temp = new List<string>();
-                Dictionary<string, string> tempDict = new Dictionary<string, string>(); 
+
+                Dictionary<string, string> learnDict = new Dictionary<string, string>();
                 foreach (var item in unknown)
                 {
-                    temp.Add(Spelling.Correct(item));
-                    tempDict.Add(item, temp.Last());
+                    string spellingword = Spelling.Correct(item);
+                    if (spellingword != item)
+                    {
+                        temp.Add(spellingword);
+                        List<string> templist = new List<string>() { temp.Last() };
+                        learnDict.Add(TryToRecognize(templist).Where(x => x!="").First(), item);
+                    }
                 }
                 temp.AddRange(result.Where(x => x != ""));
-                
+
                 result = TryToRecognize(temp);
-
-
-                string message = $"Did your mean {result[0]} {result[1]}?";
-                string caption = "Error Detected in Input";
-                MessageBoxButtons buttons = MessageBoxButtons.YesNo;
-                DialogResult dialresult;
-
-                // Displays the MessageBox.
-
-                dialresult = MessageBox.Show(message, caption, buttons);
-
-                if (dialresult == System.Windows.Forms.DialogResult.Yes)
+                if (temp != result)
                 {
-                    // Closes the parent form.
-                    
+
+                    string message = $"Did your mean {result[0]} {result[1]}?";
+                    string caption = "Error Detected in Input";
+                    MessageBoxButtons buttons = MessageBoxButtons.YesNo;
+                    DialogResult dialresult;
+
+                    // Displays the MessageBox.
+
+                    dialresult = MessageBox.Show(message, caption, buttons);
+
+                    if (dialresult ==DialogResult.Yes)
+                    {
+                        foreach (var item in Meaning.Items.Values)
+                        {
+                            if (item.Com != null && item.Com.GetWord() == result[0])
+                            {
+                                try
+                                {
+                                    item.meaning.Add(learnDict[result[0]]);
+                                }
+                                //это никто не должен увидеть
+                                catch { }
+                            }
+                            else if (item.Com != null && item.Com.GetWord() == result[1])
+                            {
+                                try
+                                {
+                                    item.meaning.Add(learnDict[result[1]]);
+                                }
+                                //и это тоже... но так надо.
+                                catch { }
+                            }
+                        }
+                        Meaning.Write();
+                    }
+                    else if (dialresult == DialogResult.No)
+                    {
+
+                    }
                 }
             }
+            
             return string.Join(" ", result);
         }
+        
 
         private List<string> TryToRecognize(List<string> list)
         {

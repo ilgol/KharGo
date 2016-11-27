@@ -64,7 +64,7 @@
                     <ListBox x:Name="rules_lb" Grid.Row="3" Grid.RowSpan="2"/>
                 </Grid>
             </TabItem>
-            <TabItem Header="Обучение">
+            <TabItem Header="Обучение" Name="TabLearnig">
                 <Grid Background="White">
                     <ComboBox x:Name="cbAction" HorizontalAlignment="Left" Margin="72,77,0,0" VerticalAlignment="Top" Width="120"/>
                     <ComboBox x:Name="cbTarget" HorizontalAlignment="Left" Margin="252,77,0,0" VerticalAlignment="Top" Width="120"/>

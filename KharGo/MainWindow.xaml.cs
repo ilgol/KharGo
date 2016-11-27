@@ -54,5 +54,10 @@ namespace KharGo
                 rules_lb.Items.Remove(rules_lb.SelectedItem);            
             cancel_bt.IsEnabled = false;
         }
+
+        public void Switch()
+        {
+            tabControl.SelectedItem = TabLearnig;
+        }
     }
 }

@@ -15,6 +15,7 @@ namespace KharGo.Intepreter
     {
         [DataMember]
         private string _word;
+
         [DataMember]
         private string _type;
         public Word(string word, string type)

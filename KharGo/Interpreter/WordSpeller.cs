@@ -18,7 +18,7 @@ namespace KharGo.Intepreter
             List<string> wordList = new List<string>();
             foreach (var item in Meaning.Items.Values)
                 foreach (var synonim in item.meaning)
-                { wordList.Add(synonim); }
+                    wordList.Add(synonim); 
 
 
             foreach (var word in wordList)
