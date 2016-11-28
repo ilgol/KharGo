@@ -16,37 +16,58 @@ namespace KharGo
         {
             InitializeComponent();
 
-            //Dictionary<List<string>, Dictionary<string, string>> ActionDictionaryList = new Dictionary<List<string>, Dictionary<string, string>>()
-            //{ { new List<string> { "skype", "скайп", "скупе", "скаааайп", "скайпе" }, new Dictionary<string,string> {{ "skype",  "target" }} },
-            //{ new List<string> { "open", "старт", "открыть" }, new Dictionary<string, string> { { "запустить", "action" } } } };
-
-            //MiniAI.AddingItems(ActionDictionaryList);
             Meaning.Read();
             Word.Read();
             foreach (var item in Word.Items.Values)
             {
                 if (item.GetTypeofWord() == "action")
-                    cbAction.Items.Add(item);
+                    cbAction.Items.Add(item.GetWord());
                 else if (item.GetTypeofWord() == "target")
-                    cbTarget.Items.Add(item);
+                    cbTarget.Items.Add(item.GetWord());
             }
 
         }
         private void accept_bt_Click(object sender, RoutedEventArgs e)
         {
-            if (execute_tb.Text != "")
+            if (tabControl.SelectedItem == TabLearnig )
             {
+                if (cbTarget.Text == "" && cbAction.Text == "")
+                {
+                    MessageBox.Show("Выберите действия!", "Ошибка ввода!", MessageBoxButton.OK, MessageBoxImage.Stop);
+                    return;
+                }
                 Invoker invoker = new Invoker();
-                Interpreter interpreter = new Interpreter(execute_tb.Text.ToLower());
+                Interpreter interpreter = new Interpreter(cbAction.Text.ToLower() + ' ' + cbTarget.Text.ToLower());
 
                 Context cbt = new Context(interpreter.Execute());
                 cbt._object = new ActionStrategy();
                 var result = cbt.Execute();
                 invoker.SetCommand(result);
                 invoker.Run();
+                Meaning.Write();
+
             }
             else
-               MessageBox.Show("Введите команду!", "Ошибка ввода!", MessageBoxButton.OK, MessageBoxImage.Stop);
+            {
+                if (execute_tb.Text != "")
+                {
+                    Invoker invoker = new Invoker();
+                    Interpreter interpreter = new Interpreter(execute_tb.Text.ToLower());
+
+                    Context cbt = new Context(interpreter.Execute());
+                    if (cbt._action == "let's learn it")
+                    {
+                        MessageBox.Show("Что вы имели ввиду?", "Неизвестная команда", MessageBoxButton.OK);
+                        return;
+                    }
+                    cbt._object = new ActionStrategy();
+                    var result = cbt.Execute();
+                    invoker.SetCommand(result);
+                    invoker.Run();
+                }
+                else
+                    MessageBox.Show("Введите команду!", "Ошибка ввода!", MessageBoxButton.OK, MessageBoxImage.Stop);
+            }
         }
         private void cancel_bt_Click(object sender, RoutedEventArgs e)
         {

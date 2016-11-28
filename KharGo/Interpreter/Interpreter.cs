@@ -3,6 +3,8 @@ using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Forms;
 using KharGo;
+using System;
+using KharGo.Learning;
 
 namespace KharGo.Intepreter
 {
@@ -35,9 +37,9 @@ namespace KharGo.Intepreter
                     }
                 }
                 temp.AddRange(result.Where(x => x != ""));
-
+                unknown.Clear();
                 result = TryToRecognize(temp);
-                if (temp != result)
+                if (temp != result && result.Where(x => x != "").ToList().Count >= 2)
                 {
 
                     string message = $"Did your mean {result[0]} {result[1]}?";
@@ -45,7 +47,6 @@ namespace KharGo.Intepreter
                     MessageBoxButtons buttons = MessageBoxButtons.YesNo;
                     DialogResult dialresult;
 
-                    // Displays the MessageBox.
 
                     dialresult = MessageBox.Show(message, caption, buttons);
 
@@ -76,11 +77,64 @@ namespace KharGo.Intepreter
                     }
                     else if (dialresult == DialogResult.No)
                     {
-
+                        ((MainWindow)System.Windows.Application.Current.MainWindow).tabControl.SelectedItem = ((MainWindow)System.Windows.Application.Current.MainWindow).TabLearnig;
+                        return "let's learn it";
                     }
                 }
+                else
+                {
+                    ((MainWindow)System.Windows.Application.Current.MainWindow).tabControl.SelectedItem = ((MainWindow)System.Windows.Application.Current.MainWindow).TabLearnig;
+                    return "let's learn it";
+                }
             }
-            
+            else if (((MainWindow)System.Windows.Application.Current.MainWindow).execute_tb.Text.ToLower().Split(' ').ToList().Count == 2 && ((MainWindow)System.Windows.Application.Current.MainWindow).tabControl.SelectedItem == ((MainWindow)System.Windows.Application.Current.MainWindow).TabLearnig)
+            {
+                //обучение новой строки при явному указании команды во вкладке обучение
+                //работает только для строки из двух слов: action & target или наоборот !!
+                List<string> temp = new List<string>() { "",""};
+                List<string> wordssimilarity = new List<string>();
+                List<string> words = ((MainWindow)System.Windows.Application.Current.MainWindow).execute_tb.Text.ToLower().Split(' ').ToList();
+                foreach (var item in words)
+                {
+                    double counter0 = 0;
+                    double counter1 = 0;
+                    foreach (var meanitem in Meaning.Items.Values)
+                    {
+                        if (meanitem.Com.GetWord() == result[0])
+                        {
+                            foreach (var synonim in meanitem.meaning)
+                            {
+                                counter0 += item.ToLower().CalculateSimilarity(synonim.ToLower());
+                            }
+                        }
+                        if (meanitem.Com.GetWord() == result[1])
+                        {
+                            foreach (var synonim in meanitem.meaning)
+                            {
+                                counter1 += item.ToLower().CalculateSimilarity(synonim.ToLower());
+                            }
+                        }
+
+                    }
+                    wordssimilarity.Add(counter0 > counter1 ? "similarToRes0" : "similarToRes1");
+                }
+
+                if (wordssimilarity[0] == "similarToRes0")
+                         temp[0] = words[0];
+                else temp[1] = words[0];
+
+                if (wordssimilarity[1] == "similarToRes0")
+                    temp[0] = words[1];
+                else temp[1] = words[1];
+
+                foreach (var item in Meaning.Items.Values)
+                {
+                    if (item.Com != null && item.Com.GetWord() == result[0])
+                            item.meaning.Add(temp[0]);
+                    else if (item.Com != null && item.Com.GetWord() == result[1])
+                            item.meaning.Add(temp[1]);
+                }
+            }
             return string.Join(" ", result);
         }
         
@@ -93,10 +147,7 @@ namespace KharGo.Intepreter
             list.ForEach(x =>
             {
                 foreach (var item in Meaning.Items.Values)
-                {
                     foreach (var synonim in item.meaning)
-                    {
-
                         if (x == synonim)
                         {
                             count++;
@@ -112,8 +163,6 @@ namespace KharGo.Intepreter
                                     break;
                             }
                         }
-                    }
-                }
                 if (count == oldcount)
                     unknown.Add(x);
                 else oldcount++;

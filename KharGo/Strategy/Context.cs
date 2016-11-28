@@ -9,7 +9,7 @@ namespace KharGo.Strategy
 {
     class Context
     {
-        protected string _action;
+        public string _action { get; private set; }
         public IStrategy _object { private get; set; }
         public Context(string action)
         {

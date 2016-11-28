@@ -82,8 +82,9 @@
     <Compile Include="Command\Invoker.cs" />
     <Compile Include="Interpreter\Interpreter.cs" />
     <Compile Include="Interpreter\Meaning.cs" />
-    <Compile Include="Interpreter\WordSpeller.cs" />
     <Compile Include="Learning\MiniAI.cs" />
+    <Compile Include="Learning\WordSpeller.cs" />
+    <Compile Include="Learning\WordsSimilarity.cs" />
     <Compile Include="Strategy\Context.cs" />
     <Compile Include="Strategy\IStrategy.cs" />
     <Compile Include="Strategy\ActionStrategy.cs" />
