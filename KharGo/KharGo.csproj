@@ -76,12 +76,11 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Interpreter\Base.cs" />
-    <Compile Include="Interpreter\Word.cs" />
     <Compile Include="Command\AbstractCommand.cs" />
     <Compile Include="Command\StartCommand.cs" />
     <Compile Include="Command\Invoker.cs" />
     <Compile Include="Interpreter\Interpreter.cs" />
-    <Compile Include="Interpreter\Meaning.cs" />
+    <Compile Include="Interpreter\Words_and_Meaning.cs" />
     <Compile Include="Learning\MiniAI.cs" />
     <Compile Include="Learning\WordSpeller.cs" />
     <Compile Include="Learning\WordsSimilarity.cs" />

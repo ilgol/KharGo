@@ -41,39 +41,24 @@ namespace KharGo.Intepreter
                 result = TryToRecognize(temp);
                 if (temp != result && result.Where(x => x != "").ToList().Count >= 2)
                 {
-
                     string message = $"Did your mean {result[0]} {result[1]}?";
                     string caption = "Error Detected in Input";
                     MessageBoxButtons buttons = MessageBoxButtons.YesNo;
                     DialogResult dialresult;
 
-
                     dialresult = MessageBox.Show(message, caption, buttons);
 
-                    if (dialresult ==DialogResult.Yes)
+                    if (dialresult == DialogResult.Yes)
                     {
-                        foreach (var item in Meaning.Items.Values)
-                        {
-                            if (item.Com != null && item.Com.GetWord() == result[0])
+                        foreach (var item in Word.Items.Values)
+                            foreach (var synonim in item.list)
                             {
-                                try
-                                {
-                                    item.meaning.Add(learnDict[result[0]]);
-                                }
-                                //это никто не должен увидеть
-                                catch { }
+                                if (item.word == result[0])
+                                    synonim.list.Add(learnDict[result[0]]);
+                                else if (item.word == result[1])
+                                    synonim.list.Add(learnDict[result[1]]);
                             }
-                            else if (item.Com != null && item.Com.GetWord() == result[1])
-                            {
-                                try
-                                {
-                                    item.meaning.Add(learnDict[result[1]]);
-                                }
-                                //и это тоже... но так надо.
-                                catch { }
-                            }
-                        }
-                        Meaning.Write();
+                        Word.Write();
                     }
                     else if (dialresult == DialogResult.No)
                     {
@@ -98,23 +83,20 @@ namespace KharGo.Intepreter
                 {
                     double counter0 = 0;
                     double counter1 = 0;
-                    foreach (var meanitem in Meaning.Items.Values)
+                    foreach (var meanitem in Word.Items.Values)
                     {
-                        if (meanitem.Com.GetWord() == result[0])
+                        if (meanitem.word == result[0])
                         {
-                            foreach (var synonim in meanitem.meaning)
-                            {
-                                counter0 += item.ToLower().CalculateSimilarity(synonim.ToLower());
-                            }
+                            foreach (var synonims in meanitem.list)
+                                foreach (var synonim in synonims.list)
+                                    counter0 += item.ToLower().CalculateSimilarity(synonim.ToLower());
                         }
-                        if (meanitem.Com.GetWord() == result[1])
+                        if (meanitem.word == result[1])
                         {
-                            foreach (var synonim in meanitem.meaning)
-                            {
-                                counter1 += item.ToLower().CalculateSimilarity(synonim.ToLower());
-                            }
+                            foreach (var synonims in meanitem.list)
+                                foreach (var synonim in synonims.list)
+                                    counter1 += item.ToLower().CalculateSimilarity(synonim.ToLower());
                         }
-
                     }
                     wordssimilarity.Add(counter0 > counter1 ? "similarToRes0" : "similarToRes1");
                 }
@@ -127,13 +109,14 @@ namespace KharGo.Intepreter
                     temp[0] = words[1];
                 else temp[1] = words[1];
 
-                foreach (var item in Meaning.Items.Values)
-                {
-                    if (item.Com != null && item.Com.GetWord() == result[0])
-                            item.meaning.Add(temp[0]);
-                    else if (item.Com != null && item.Com.GetWord() == result[1])
-                            item.meaning.Add(temp[1]);
-                }
+                foreach (var item in Word.Items.Values)
+                    foreach (var synonim in item.list)
+                    {
+                        if (item.word == result[0])
+                            synonim.list.Add(temp[0]);
+                        else if (item.word == result[1])
+                            synonim.list.Add(temp[1]);
+                    }
             }
             return string.Join(" ", result);
         }
@@ -146,23 +129,28 @@ namespace KharGo.Intepreter
             List<string> result = new List<string>() { "", "", "" };
             list.ForEach(x =>
             {
-                foreach (var item in Meaning.Items.Values)
-                    foreach (var synonim in item.meaning)
-                        if (x == synonim)
+                foreach (var values in Word.Items.Values)
+                    foreach (var synonim in values.list)
+                    {
+                        foreach (var item in synonim.list)
                         {
-                            count++;
-                            switch (item.Com.GetTypeofWord())
+                            if (x == item)
                             {
-                                case "action":
-                                    result[0] = item.Com.GetWord();
-                                    break;
-                                case "target":
-                                    result[1] = item.Com.GetWord();
-                                    break;
-                                default:
-                                    break;
+                                count++;
+                                switch (synonim.type)
+                                {
+                                    case "action":
+                                        result[0] = values.word;
+                                        break;
+                                    case "target":
+                                        result[1] = values.word;
+                                        break;
+                                    default:
+                                        break;
+                                }
                             }
                         }
+                    }
                 if (count == oldcount)
                     unknown.Add(x);
                 else oldcount++;

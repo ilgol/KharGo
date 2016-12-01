@@ -9,18 +9,17 @@ namespace KharGo.Learning
 {
     public class MiniAI
     {
-        public static Dictionary<List<string>, Dictionary<string,string>> ActionDictionaryList;
-        public static void AddingItems(Dictionary<List<string>, Dictionary<string, string>> adl)
+        public static void AddingItems(string word, string action, List<string> list)
         {
-            ActionDictionaryList = adl;
-            foreach (var item in adl)
-            {
-                Word word = new Word(item.Value.Keys.First(), item.Value.Values.First());
-                Meaning meaning = new Meaning();
-                meaning.Com = word;
-                meaning.meaning = new List<string>(item.Key);
-            }
-            Meaning.Write();
+            Word Word = new Word();
+            Mean Mean = new Mean();
+
+            Word.list = new List<Mean>();
+            Word.word = word;
+            Mean.type = action;
+            Mean.list = list;
+            Word.list.Add(Mean);
+
             Word.Write();
         }
     }

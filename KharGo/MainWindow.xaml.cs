@@ -4,6 +4,9 @@ using KharGo.Command;
 using KharGo.Intepreter;
 using KharGo.Learning;
 using System.Collections.Generic;
+using System.IO;
+using Newtonsoft.Json;
+using System;
 
 namespace KharGo
 {
@@ -16,16 +19,37 @@ namespace KharGo
         {
             InitializeComponent();
 
-            Meaning.Read();
             Word.Read();
-            foreach (var item in Word.Items.Values)
-            {
-                if (item.GetTypeofWord() == "action")
-                    cbAction.Items.Add(item.GetWord());
-                else if (item.GetTypeofWord() == "target")
-                    cbTarget.Items.Add(item.GetWord());
-            }
 
+            //word data = new word();
+            //word data1 = new word();
+            //mean mean = new mean();
+            //mean mean1 = new mean();
+
+            //data.list = new List<mean>();
+            //data._word = "запустить";
+            //mean.type = "action";
+            //mean.list = new List<string> { "open", "старт", "открыть", "запустить", "откріть", "popen", "запустити", "запускай", "запустить", "open", "open", "открытфь", "открой", "открывай", "откры", "запуск" };
+            //data.list.Add(mean);
+
+            //data1.list = new List<mean>();
+            //data1._word = "skype";
+            //mean1.type = "target";
+            //mean1.list = new List<string> { "skype", "скайп", "скупе", "скаааайп", "скайпе", "skipe", "скайпєц", "скайпулю", "скайпуню", "skyyyyyp", "skyyype", "сйкап", "скйпрлоы", "скайп", "скайп", "скай", "скайп" };
+            //data1.list.Add(mean1);
+
+            //word.Write();
+
+            foreach (var values in Word.Items.Values)
+            {
+                foreach (var item in values.list)
+                {
+                    if (item.type == "action")
+                        cbAction.Items.Add(values.word);
+                    else if (item.type == "target")
+                        cbTarget.Items.Add(values.word);
+                }
+            }
         }
         private void accept_bt_Click(object sender, RoutedEventArgs e)
         {
@@ -44,8 +68,7 @@ namespace KharGo
                 var result = cbt.Execute();
                 invoker.SetCommand(result);
                 invoker.Run();
-                Meaning.Write();
-
+                Word.Write();
             }
             else
             {

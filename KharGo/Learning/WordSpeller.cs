@@ -15,17 +15,20 @@ namespace KharGo.Intepreter
 
         public Spelling()
         {
+            //можно взять из другого места
             List<string> wordList = new List<string>();
-            foreach (var item in Meaning.Items.Values)
-                foreach (var synonim in item.meaning)
-                    wordList.Add(synonim); 
+            foreach (var item in Word.Items.Values)
+                foreach (var synonim in item.list)
+                    wordList.AddRange(synonim.list); 
 
+            //зачем такой большой дикшинари?
 
             foreach (var word in wordList)
             {
                 string trimmedWord = word.Trim().ToLower();
                 if (_wordRegex.IsMatch(trimmedWord))
                 {
+                    //не там прверяем
                     if (_dictionary.ContainsKey(trimmedWord))
                         _dictionary[trimmedWord]++;
                     else
@@ -58,8 +61,10 @@ namespace KharGo.Intepreter
                 return candidates.OrderByDescending(x => x.Value).First().Key;
 
             // known_edits2()
+            
             foreach (string item in list)
             {
+                //зачем все проходить заново если надо добавить только что-то новое?
                 foreach (string wordVariation in Edits(item))
                 {
                     if (_dictionary.ContainsKey(wordVariation) && !candidates.ContainsKey(wordVariation))
@@ -107,6 +112,10 @@ namespace KharGo.Intepreter
                 }
             }
 
+            //
+            // сделать метод skype == ылнзу
+            //
+
             // Replaces
             for (int i = 0; i < splits.Count; i++)
             {
@@ -139,8 +148,6 @@ namespace KharGo.Intepreter
                 {
                     inserts.Add(a + c + b);
                 }
-
-
             }
 
             return deletes.Union(transposes).Union(replaces).Union(inserts).ToList();

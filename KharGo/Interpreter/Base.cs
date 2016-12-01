@@ -1,15 +1,15 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
 
 namespace KharGo.Intepreter
 {
     //базовый класс для хранения всей информации
-    [DataContract]
+    [JsonObject("Base")]
     public class Base<T> where T : Base<T>
     {
         public static Dictionary<Guid, T> Items = new Dictionary<Guid, T>();
-        [DataMember]
+        [JsonProperty("ID")]
         public Guid Id { get; private set; }
 
         public Base()
