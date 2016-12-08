@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Windows;
 
 namespace KharGo.Command
 {
@@ -17,7 +18,11 @@ namespace KharGo.Command
             // Enter the executable to run, including the complete path
             start.FileName = _exename;
             // Run the external process & wait for it to finish
-            Process proc = Process.Start(_exename);
+            try
+            {
+                Process proc = Process.Start(_exename);
+            }
+            catch { MessageBox.Show("Не удается открыть файл", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error); }
         }
         public override void Undo()
         {

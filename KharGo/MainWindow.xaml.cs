@@ -26,41 +26,55 @@ namespace KharGo
         public MainWindow()
         {
             InitializeComponent();
-            using (PowerShell PowerShellInstance = PowerShell.Create())
+
+            if (!File.Exists("Data.json"))
             {
-                PowerShellInstance.AddCommand("Get-ItemProperty");
-                PowerShellInstance.AddArgument(@"HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\*");
-                Dictionary<string, string> programs = new Dictionary<string, string>();
-                PowerShellInstance.AddCommand("Select-Object");
-                PowerShellInstance.AddArgument(new List<string>() { "PSChildName", "(Default)" });
-                Collection<PSObject> PSOutput = PowerShellInstance.Invoke();
-                foreach (var item in PSOutput)
+                Word data1 = new Word();
+                Mean mean1 = new Mean();
+
+                data1.list = new List<Mean>();
+                data1.word = "запустить";
+                mean1.type = "action";
+                mean1.list = new List<string> { "open", "старт", "открыть", "запустить", "откріть", "popen", "запустити", "запускай", "запустить", "open", "open", "открытфь", "открой", "открывай", "откры", "запуск" };
+                data1.list.Add(mean1);
+
+                using (PowerShell PowerShellInstance = PowerShell.Create())
                 {
-                    string[] result = item.ToString().Split(';');
-                    var name = result[0].Substring(14);
-                    var path = result[1].Substring(11).Replace("}", string.Empty);
-                    if (name.Contains(".exe")/* && path != ""*/)
+                    PowerShellInstance.AddCommand("Get-ItemProperty");
+                    PowerShellInstance.AddArgument(@"HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\*");
+                    Dictionary<string, string> programs = new Dictionary<string, string>();
+                    PowerShellInstance.AddCommand("Select-Object");
+                    PowerShellInstance.AddArgument(new List<string>() { "PSChildName", "(Default)" });
+                    Collection<PSObject> PSOutput = PowerShellInstance.Invoke();
+                    foreach (var item in PSOutput)
                     {
-                        programs.Add(name, path);
+                        string[] result = item.ToString().Split(';');
+                        var name = result[0].Substring(14);
+                        var path = result[1].Substring(11).Replace("}", string.Empty);
+                        if (name.Contains(".exe")/* && path != ""*/)
+                        {
+                            programs.Add(name, path);
 
-                        ///проверяю, все ли работает
-                        // Prepare the process to run
-                        ProcessStartInfo start = new ProcessStartInfo();
-                        // Enter the executable to run, including the complete path
-                        start.FileName = name;
-                        // Run the external process & wait for it to finish
-                        Process proc = Process.Start(name.Replace(".exe", string.Empty));
+                            ///проверяю, все ли работает
+                            // Prepare the process to run
+                            ProcessStartInfo start = new ProcessStartInfo();
+                            // Enter the executable to run, including the complete path
+                            start.FileName = name;
+                            // Run the external process & wait for it to finish
+                            //Process proc = Process.Start(name.Replace(".exe", string.Empty));
 
-                        Word data = new Word();
-                        Mean mean = new Mean();
-                        data.word = name.Replace(".exe", string.Empty).ToLower();
-                        mean.type = "target";
-                        data.list = new List<Mean>();
-                        mean.list = new List<string>();
-                        mean.list.Add(name.Replace(".exe", string.Empty).ToLower());
-                        data.list.Add(mean);
-                        Word.Write();
+                            Word data = new Word();
+                            Mean mean = new Mean();
 
+                            data.word = name.Replace(".exe", string.Empty).ToLower();
+                            mean.type = "target";
+                            data.list = new List<Mean>();
+                            mean.list = new List<string>();
+                            mean.list.Add(name.Replace(".exe", string.Empty).ToLower());
+                            data.list.Add(mean);
+
+                            Word.Write();
+                        }
                     }
                 }
             }
