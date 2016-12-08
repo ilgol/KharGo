@@ -134,6 +134,7 @@ namespace KharGo.Intepreter
                     else if (item.Com != null && item.Com.GetWord() == result[1])
                             item.meaning.Add(temp[1]);
                 }
+                Meaning.Write();
             }
             return string.Join(" ", result);
         }

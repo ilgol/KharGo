@@ -4,6 +4,8 @@ using KharGo.Command;
 using KharGo.Intepreter;
 using KharGo.Learning;
 using System.Collections.Generic;
+using System.Management.Automation;
+using System.Collections.ObjectModel;
 
 namespace KharGo
 {
@@ -14,8 +16,27 @@ namespace KharGo
     {
         public MainWindow()
         {
+            
             InitializeComponent();
-
+            using (PowerShell PowerShellInstance = PowerShell.Create())
+            {
+                PowerShellInstance.AddCommand("Get-ItemProperty");
+                PowerShellInstance.AddArgument(@"HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\*");
+                Dictionary<string, string> programs = new Dictionary<string, string>();
+                PowerShellInstance.AddCommand("Select-Object");
+                PowerShellInstance.AddArgument(new List<string>() { "PSChildName","(Default)" });
+                Collection<PSObject> PSOutput = PowerShellInstance.Invoke();
+                foreach (var item in PSOutput)
+                {
+                    string[] result = item.ToString().Split(';');
+                    var name = result[0].Substring(14);
+                    var path = result[1].Substring(11).Replace("}", string.Empty);
+                    if (name.Contains(".exe") && path != "" )
+                    {
+                        programs.Add(name, path);
+                    }
+                }
+            }
             Meaning.Read();
             Word.Read();
             foreach (var item in Word.Items.Values)
