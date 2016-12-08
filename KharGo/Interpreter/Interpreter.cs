@@ -54,9 +54,17 @@ namespace KharGo.Intepreter
                             foreach (var synonim in item.list)
                             {
                                 if (item.word == result[0])
-                                    synonim.list.Add(learnDict[result[0]]);
+                                    try
+                                    {
+                                        synonim.list.Add(learnDict[result[0]]);
+                                    }
+                                    catch { }
                                 else if (item.word == result[1])
-                                    synonim.list.Add(learnDict[result[1]]);
+                                    try
+                                    {
+                                        synonim.list.Add(learnDict[result[1]]);
+                                    }
+                                    catch { }
                             }
                         Word.Write();
                     }
@@ -131,9 +139,7 @@ namespace KharGo.Intepreter
             {
                 foreach (var values in Word.Items.Values)
                     foreach (var synonim in values.list)
-                    {
                         foreach (var item in synonim.list)
-                        {
                             if (x == item)
                             {
                                 count++;
@@ -148,9 +154,7 @@ namespace KharGo.Intepreter
                                     default:
                                         break;
                                 }
-                            }
-                        }
-                    }
+                            }                   
                 if (count == oldcount)
                     unknown.Add(x);
                 else oldcount++;

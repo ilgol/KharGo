@@ -50,13 +50,19 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="NAudio, Version=1.7.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NAudio.1.7.3\lib\net35\NAudio.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="PresentationFramework.Aero2" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Speech" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -75,6 +81,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="VoiceCommand.cs" />
     <Compile Include="Interpreter\Base.cs" />
     <Compile Include="Command\AbstractCommand.cs" />
     <Compile Include="Command\StartCommand.cs" />
@@ -84,6 +91,7 @@
     <Compile Include="Learning\MiniAI.cs" />
     <Compile Include="Learning\WordSpeller.cs" />
     <Compile Include="Learning\WordsSimilarity.cs" />
+    <Compile Include="Recognition.cs" />
     <Compile Include="Strategy\Context.cs" />
     <Compile Include="Strategy\IStrategy.cs" />
     <Compile Include="Strategy\ActionStrategy.cs" />
