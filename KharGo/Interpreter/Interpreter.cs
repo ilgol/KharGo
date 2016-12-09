@@ -33,7 +33,7 @@ namespace KharGo.Intepreter
                     {
                         temp.Add(spellingword);
                         List<string> templist = new List<string>() { temp.Last() };
-                        learnDict.Add(TryToRecognize(templist).Where(x => x!="").First(), item);
+                        learnDict.Add(TryToRecognize(templist).Where(x => x != "").First(), item);
                     }
                 }
                 temp.AddRange(result.Where(x => x != ""));
@@ -84,7 +84,7 @@ namespace KharGo.Intepreter
             {
                 //обучение новой строки при явному указании команды во вкладке обучение
                 //работает только для строки из двух слов: action & target или наоборот !!
-                List<string> temp = new List<string>() { "",""};
+                List<string> temp = new List<string>() { "", "" };
                 List<string> wordssimilarity = new List<string>();
                 List<string> words = ((MainWindow)System.Windows.Application.Current.MainWindow).execute_tb.Text.ToLower().Split(' ').ToList();
                 foreach (var item in words)
@@ -110,12 +110,16 @@ namespace KharGo.Intepreter
                 }
 
                 if (wordssimilarity[0] == "similarToRes0")
-                         temp[0] = words[0];
-                else temp[1] = words[0];
-
-                if (wordssimilarity[1] == "similarToRes0")
+                {
+                    temp[0] = words[0];
+                    temp[1] = words[1];
+                }
+                else
+                {
+                    temp[1] = words[0];
                     temp[0] = words[1];
-                else temp[1] = words[1];
+                }
+
 
                 foreach (var item in Word.Items.Values)
                     foreach (var synonim in item.list)
@@ -128,7 +132,7 @@ namespace KharGo.Intepreter
             }
             return string.Join(" ", result);
         }
-        
+
 
         private List<string> TryToRecognize(List<string> list)
         {
@@ -154,7 +158,7 @@ namespace KharGo.Intepreter
                                     default:
                                         break;
                                 }
-                            }                   
+                            }
                 if (count == oldcount)
                     unknown.Add(x);
                 else oldcount++;

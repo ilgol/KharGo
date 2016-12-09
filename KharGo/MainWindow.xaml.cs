@@ -212,6 +212,7 @@ namespace KharGo
             Invoker invoker = new Invoker();
             Interpreter interpreter = new Interpreter(command.ToLower());
 
+
             Context cbt = new Context(interpreter.Execute());
 
             if (cbt._action == "let's learn it")
@@ -235,9 +236,11 @@ namespace KharGo
             //cmd = VoiceCommand.Read();
             string toparse = toParse.Replace("{\"result\":[]}\n", "");
             var root = JsonConvert.DeserializeObject<RootObject>(toparse);
-            var trans = root.result[0].alternative;
-            //foreach (var item in trans)
-            //{
+            try
+            {
+                var trans = root.result[0].alternative;
+                //foreach (var item in trans)
+                //{
                 //foreach (var item1 in cmd)
                 //{
                 //if (item.transcript == item1.command)
@@ -246,7 +249,9 @@ namespace KharGo
                 //Voice(item1.answer);
                 //}
                 //}
-            //}            
+                //}    
+            }
+            catch { Voice("Извините я вас не поняла"); }        
         }
         public void Voice(string ans)
         {
@@ -259,7 +264,7 @@ namespace KharGo
         }
         private void rules_lb_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            if (MessageBox.Show("Ви хотите применить эту команду?", "Вопрос", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.OK)
+            if (MessageBox.Show("Ви хотите применить эту команду?", "Вопрос", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
                 execute_tb.Text = rules_lb.SelectedItem.ToString();
             }

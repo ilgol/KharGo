@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace KharGo.Intepreter
 {
@@ -18,6 +19,14 @@ namespace KharGo.Intepreter
         }
         public static void Write()
         {
+            var temp = Word.Items.Values;
+            foreach (var item in temp)
+            {
+                foreach (var synonim in item.list)
+                {
+                    synonim.list = synonim.list.Distinct().ToList();
+                }
+            }
             File.WriteAllText(@"Data.json", JsonConvert.SerializeObject(Items));
         }
     }
