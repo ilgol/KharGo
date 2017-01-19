@@ -1,7 +1,7 @@
 ﻿using System.Linq;
-using Logic.Intepreter;
-using Logic.Strategy;
-using Logic.Command;
+using KharGo.Intepreter;
+using KharGo.Strategy;
+using KharGo.Command;
 using KharGo.MVVM;
 using KharGo.SpeechToText;
 using System.Windows;

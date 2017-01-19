@@ -2,11 +2,11 @@
 using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Forms;
-using KharGo;
+using Logic;
 using System;
-using KharGo.Learning;
+using Logic.Learning;
 
-namespace KharGo.Intepreter
+namespace Logic.Intepreter
 {
     public class Interpreter
     {

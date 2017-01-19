@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Management.Automation;
-using KharGo.Intepreter;
+using Logic.Intepreter;
 namespace KharGo.Desktop
 {
     public static class Prepare

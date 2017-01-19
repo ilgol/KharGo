@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace KharGo.Intepreter
+namespace Logic.Intepreter
 {
     //базовый класс для хранения всей информации
     [JsonObject("Base")]

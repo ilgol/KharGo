@@ -2,10 +2,9 @@
 using Logic.Intepreter;
 using Logic.Strategy;
 using Logic.Command;
-using KharGo.MVVM;
-using KharGo.SpeechToText;
-using System.Windows;
-using System.Windows.Controls;
+using KharGO.MVVM;
+using KharGO.SpeechToText;
+using System.Windows.Forms;
 
 namespace KharGo.Facade
 {
