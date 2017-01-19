@@ -5,7 +5,7 @@ VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KharGo", "KharGo\KharGo.csproj", "{F4E9F58E-BCBA-4C70-930F-F13ED45FC51D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logic", "Logic\Logic.csproj", "{1D899938-3944-4409-8C97-8D719CB20BEA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logic", "ClassLibrary1\Logic.csproj", "{8F7EF018-CD44-4662-93D7-8A7981747457}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{F4E9F58E-BCBA-4C70-930F-F13ED45FC51D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F4E9F58E-BCBA-4C70-930F-F13ED45FC51D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F4E9F58E-BCBA-4C70-930F-F13ED45FC51D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1D899938-3944-4409-8C97-8D719CB20BEA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1D899938-3944-4409-8C97-8D719CB20BEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1D899938-3944-4409-8C97-8D719CB20BEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1D899938-3944-4409-8C97-8D719CB20BEA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F7EF018-CD44-4662-93D7-8A7981747457}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F7EF018-CD44-4662-93D7-8A7981747457}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F7EF018-CD44-4662-93D7-8A7981747457}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F7EF018-CD44-4662-93D7-8A7981747457}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

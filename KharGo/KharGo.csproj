@@ -85,31 +85,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Command\StopCommand.cs" />
     <Compile Include="Desktop\Prepare.cs" />
-    <Compile Include="Facade\MenuFacade.cs" />
-    <Compile Include="Factory method\StopWordFactory.cs" />
-    <Compile Include="Factory method\StopWord.cs" />
-    <Compile Include="Factory method\StartWordFactory.cs" />
-    <Compile Include="Factory method\StartWord.cs" />
-    <Compile Include="Factory method\ActionWordFactory.cs" />
     <Compile Include="MVVM\MainWindowViewModel.cs" />
     <Compile Include="MVVM\ViewModelBase.cs" />
     <Compile Include="SpeechToText\STT.cs" />
     <Compile Include="VoiceCommand.cs" />
-    <Compile Include="Interpreter\Base.cs" />
-    <Compile Include="Command\AbstractCommand.cs" />
-    <Compile Include="Command\StartCommand.cs" />
-    <Compile Include="Command\Invoker.cs" />
-    <Compile Include="Interpreter\Interpreter.cs" />
-    <Compile Include="Interpreter\Words_and_Meaning.cs" />
-    <Compile Include="Learning\MiniAI.cs" />
-    <Compile Include="Learning\WordSpeller.cs" />
-    <Compile Include="Learning\WordsSimilarity.cs" />
     <Compile Include="Recognition.cs" />
-    <Compile Include="Strategy\Context.cs" />
-    <Compile Include="Strategy\IStrategy.cs" />
-    <Compile Include="Strategy\ActionStrategy.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -164,6 +145,12 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ClassLibrary1\Logic.csproj">
+      <Project>{8f7ef018-cd44-4662-93d7-8a7981747457}</Project>
+      <Name>Logic</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
