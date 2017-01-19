@@ -32,7 +32,7 @@
             <RowDefinition/>
             <RowDefinition Height="5"/>
         </Grid.RowDefinitions>
-        <Button x:Name="accept_bt" Content="Сказать команду" Grid.Row="3" ClickMode="Press" TabIndex="2" Click="accept_bt_Click" Grid.Column="1">
+        <Button Content="{Binding Accept, UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" ClickMode="Press" TabIndex="2" Click="accept_bt_Click" Grid.Column="1">
             <Button.Background>
                 <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
                     <GradientStop Color="#FFF3F3F3" Offset="1"/>
@@ -40,7 +40,7 @@
                 </LinearGradientBrush>
             </Button.Background>
         </Button>
-        <Button x:Name="cancel_bt" Content="Применить команду" Grid.Row="3" ClickMode="Press" TabIndex="3" Click="cancel_bt_Click" Grid.Column="3">
+        <Button Content="{Binding Apply, UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" ClickMode="Press" TabIndex="3" Click="apply_btn_Click" Grid.Column="3">
             <Button.Background>
                 <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
                     <GradientStop Color="#FFF3F3F3" Offset="1"/>
@@ -49,7 +49,7 @@
                 </LinearGradientBrush>
             </Button.Background>
         </Button>
-        <TabControl x:Name="tabControl" Grid.Column="1" Height="310" Grid.Row="1" VerticalAlignment="Top" Grid.ColumnSpan="3">
+        <TabControl x:Name="tabcontrol" Grid.Column="1" Height="310" Grid.Row="1" VerticalAlignment="Top" Grid.ColumnSpan="3">
             <TabItem Header="Команды">
                 <Grid Background="White">
                     <Grid.RowDefinitions>
@@ -59,9 +59,9 @@
                         <RowDefinition/>
                     </Grid.RowDefinitions>
                     <TextBlock Text="Команда..." Foreground="{StaticResource brushWatermarkForeground}"
-                       Visibility="{Binding Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=execute_tb}" Grid.Row="1" VerticalAlignment="Center"/>
-                    <TextBox x:Name="execute_tb" Background="Transparent" BorderBrush="{StaticResource brushWatermarkBorder}" Height="35" TextWrapping="Wrap" VerticalAlignment="Center" Grid.Row="1" VerticalContentAlignment="Center"/>
-                    <ListBox x:Name="rules_lb" Grid.Row="3" MouseDoubleClick="rules_lb_MouseDoubleClick"></ListBox>
+                       Visibility="{Binding Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=execute_tb}"  Grid.Row="1" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                    <TextBox x:Name="execute_tb" Text="{Binding Text, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" BorderBrush="{StaticResource brushWatermarkBorder}" Background="Transparent" Height="35" TextWrapping="Wrap" VerticalAlignment="Center" Grid.Row="1" VerticalContentAlignment="Center"/>
+                    <ListBox ItemsSource="{Binding CommandList, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Grid.Row="3" MouseDoubleClick="rules_lb_MouseDoubleClick"></ListBox>
                 </Grid>
             </TabItem>
             <TabItem Header="Обучение" Name="TabLearnig">

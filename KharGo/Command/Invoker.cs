@@ -1,7 +1,7 @@
 ﻿namespace KharGo.Command
 {
     // инициатор команды
-    class Invoker
+    public class Invoker
     {
         AbstractCommand command;
         public void SetCommand(AbstractCommand c)

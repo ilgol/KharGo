@@ -12,6 +12,10 @@ namespace KharGo.Intepreter
     {
         private string _text;
         List<string> unknown = new List<string>();
+        List<string> result;
+
+        public Interpreter()
+        { }
 
         public Interpreter(string text)
         {
@@ -19,7 +23,7 @@ namespace KharGo.Intepreter
         }
         public string Execute()
         {
-            List<string> result = TryToRecognize(_text.Split(' ').ToList());
+            result = TryToRecognize(_text.Split(' ').ToList());
             if (unknown.Count > 0)
             {
                 Spelling spelling = new Spelling();
@@ -70,65 +74,13 @@ namespace KharGo.Intepreter
                     }
                     else if (dialresult == DialogResult.No)
                     {
-                        ((MainWindow)System.Windows.Application.Current.MainWindow).tabControl.SelectedItem = ((MainWindow)System.Windows.Application.Current.MainWindow).TabLearnig;
                         return "let's learn it";
                     }
                 }
                 else
                 {
-                    ((MainWindow)System.Windows.Application.Current.MainWindow).tabControl.SelectedItem = ((MainWindow)System.Windows.Application.Current.MainWindow).TabLearnig;
                     return "let's learn it";
                 }
-            }
-            else if (((MainWindow)System.Windows.Application.Current.MainWindow).execute_tb.Text.ToLower().Split(' ').ToList().Count == 2 && ((MainWindow)System.Windows.Application.Current.MainWindow).tabControl.SelectedItem == ((MainWindow)System.Windows.Application.Current.MainWindow).TabLearnig)
-            {
-                //обучение новой строки при явному указании команды во вкладке обучение
-                //работает только для строки из двух слов: action & target или наоборот !!
-                List<string> temp = new List<string>() { "", "" };
-                List<string> wordssimilarity = new List<string>();
-                List<string> words = ((MainWindow)System.Windows.Application.Current.MainWindow).execute_tb.Text.ToLower().Split(' ').ToList();
-                foreach (var item in words)
-                {
-                    double counter0 = 0;
-                    double counter1 = 0;
-                    foreach (var meanitem in Word.Items.Values)
-                    {
-                        if (meanitem.word == result[0])
-                        {
-                            foreach (var synonims in meanitem.list)
-                                foreach (var synonim in synonims.list)
-                                    counter0 += item.ToLower().CalculateSimilarity(synonim.ToLower());
-                        }
-                        if (meanitem.word == result[1])
-                        {
-                            foreach (var synonims in meanitem.list)
-                                foreach (var synonim in synonims.list)
-                                    counter1 += item.ToLower().CalculateSimilarity(synonim.ToLower());
-                        }
-                    }
-                    wordssimilarity.Add(counter0 > counter1 ? "similarToRes0" : "similarToRes1");
-                }
-
-                if (wordssimilarity[0] == "similarToRes0")
-                {
-                    temp[0] = words[0];
-                    temp[1] = words[1];
-                }
-                else
-                {
-                    temp[1] = words[0];
-                    temp[0] = words[1];
-                }
-
-
-                foreach (var item in Word.Items.Values)
-                    foreach (var synonim in item.list)
-                    {
-                        if (item.word == result[0])
-                            synonim.list.Add(temp[0]);
-                        else if (item.word == result[1])
-                            synonim.list.Add(temp[1]);
-                    }
             }
             return string.Join(" ", result);
         }
@@ -164,6 +116,59 @@ namespace KharGo.Intepreter
                 else oldcount++;
             });
             return result;
+        }
+
+        public string LearnTwoWordCommand(string Text)
+        {
+            //обучение новой строки при явному указании команды во вкладке обучение
+            //работает только для строки из двух слов: action & target или наоборот !!
+            List<string> temp = new List<string>() { "", "" };
+            List<string> wordssimilarity = new List<string>();
+            List<string> words = Text.ToLower().Split(' ').ToList();
+            foreach (var item in words)
+            {
+                double counter0 = 0;
+                double counter1 = 0;
+                foreach (var meanitem in Word.Items.Values)
+                {
+                    if (meanitem.word == result[0])
+                    {
+                        foreach (var synonims in meanitem.list)
+                            foreach (var synonim in synonims.list)
+                                counter0 += item.ToLower().CalculateSimilarity(synonim.ToLower());
+                    }
+                    if (meanitem.word == result[1])
+                    {
+                        foreach (var synonims in meanitem.list)
+                            foreach (var synonim in synonims.list)
+                                counter1 += item.ToLower().CalculateSimilarity(synonim.ToLower());
+                    }
+                }
+                wordssimilarity.Add(counter0 > counter1 ? "similarToRes0" : "similarToRes1");
+            }
+
+            if (wordssimilarity[0] == "similarToRes0")
+            {
+                temp[0] = words[0];
+                temp[1] = words[1];
+            }
+            else
+            {
+                temp[1] = words[0];
+                temp[0] = words[1];
+            }
+
+
+            foreach (var item in Word.Items.Values)
+                foreach (var synonim in item.list)
+                {
+                    if (item.word == result[0])
+                        synonim.list.Add(temp[0]);
+                    else if (item.word == result[1])
+                        synonim.list.Add(temp[1]);
+                }
+
+            return string.Join(" ", result);
         }
     }
 }

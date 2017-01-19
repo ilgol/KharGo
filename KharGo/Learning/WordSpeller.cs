@@ -64,7 +64,6 @@ namespace KharGo.Intepreter
             
             foreach (string item in list)
             {
-                //зачем все проходить заново если надо добавить только что-то новое?
                 foreach (string wordVariation in Edits(item))
                 {
                     if (_dictionary.ContainsKey(wordVariation) && !candidates.ContainsKey(wordVariation))

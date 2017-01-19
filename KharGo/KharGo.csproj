@@ -86,6 +86,16 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Command\StopCommand.cs" />
+    <Compile Include="Desktop\Prepare.cs" />
+    <Compile Include="Facade\MenuFacade.cs" />
+    <Compile Include="Factory method\StopWordFactory.cs" />
+    <Compile Include="Factory method\StopWord.cs" />
+    <Compile Include="Factory method\StartWordFactory.cs" />
+    <Compile Include="Factory method\StartWord.cs" />
+    <Compile Include="Factory method\ActionWordFactory.cs" />
+    <Compile Include="MVVM\MainWindowViewModel.cs" />
+    <Compile Include="MVVM\ViewModelBase.cs" />
+    <Compile Include="SpeechToText\STT.cs" />
     <Compile Include="VoiceCommand.cs" />
     <Compile Include="Interpreter\Base.cs" />
     <Compile Include="Command\AbstractCommand.cs" />

@@ -7,10 +7,14 @@ using KharGo.Command;
 
 namespace KharGo.Strategy
 {
-    class Context
+    public class Context
     {
         public string _action { get; private set; }
         public IStrategy _object { private get; set; }
+
+        public Context()
+        { }
+
         public Context(string action)
         {
             _action = action;

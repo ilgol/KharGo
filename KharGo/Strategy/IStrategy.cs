@@ -2,7 +2,7 @@
 
 namespace KharGo.Strategy
 {
-    interface IStrategy
+    public interface IStrategy
     {
         AbstractCommand Algorithm(string context);
     }
