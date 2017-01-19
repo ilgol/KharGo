@@ -12,7 +12,10 @@ namespace KharGo.Strategy
             {
                 case "запустить":
                     result = new StartCommand(context.Split(' ')[1]);
-                    break;                   
+                    break;
+                case "остановить":
+                    result = new StopCommand(context.Split(' ')[1]);
+                    break;
                 default:
                     break;
             }
