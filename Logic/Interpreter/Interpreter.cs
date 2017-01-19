@@ -1,10 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Windows.Controls;
-using System.Windows.Forms;
-using Logic;
-using System;
 using Logic.Learning;
+using System.Windows.Forms;
 
 namespace Logic.Intepreter
 {

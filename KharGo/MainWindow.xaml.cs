@@ -1,25 +1,13 @@
 ﻿using System.Windows;
-using Logic.Strategy;
-using Logic.Command;
-using Logic.Intepreter;
 using System.Collections.Generic;
-using NAudio.Wave;
-using System.Speech.Synthesis;
-using Newtonsoft.Json;
-using System.Net;
 using System.IO;
-using System;
-using System.Diagnostics;
-using System.Windows.Threading;
 using System.Windows.Controls;
-using Logic.Factory_method;
-using System.Management.Automation;
-using System.Collections.ObjectModel;
 using KharGo.SpeechToText;
 using KharGo.MVVM;
-using System.Linq;
 using KharGo.Facade;
 using KharGo.Desktop;
+using Logic.Factory_method;
+using Logic.Intepreter;
 
 namespace KharGo
 {

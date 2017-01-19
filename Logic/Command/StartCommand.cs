@@ -22,7 +22,7 @@ namespace Logic.Command
             {
                 Process proc = Process.Start(_exename);
             }
-            catch { MessageBox.Show("Не удается открыть файл", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error); }
+            catch { System.Windows.MessageBox.Show("Не удается открыть файл", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error); }
         }
         public override void Undo()
         {
