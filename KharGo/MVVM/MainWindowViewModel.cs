@@ -57,7 +57,8 @@ namespace KharGo.MVVM
 
         public List<string> CommandList
         {
-            get { return commandList; }
+            get
+            { return commandList; }
             set
             {
                 commandList = value;

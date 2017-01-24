@@ -8,6 +8,7 @@ using KharGo.Facade;
 using KharGo.Desktop;
 using Logic.Factory_method;
 using Logic.Intepreter;
+using System.Threading;
 
 namespace KharGo
 {
@@ -25,6 +26,7 @@ namespace KharGo
 
             instance = STT.getInstance();
             dataContext = new MainWindowViewModel();
+            dataContext.CommandList = new List<string>();
             dataContext.Accept = "Сказать команду";
             dataContext.Apply = "Применить";
             dataContext.TabControlName = tabcontrol;
@@ -50,34 +52,42 @@ namespace KharGo
                 foreach (var item in values.list)
                 {
                     if (item.type == "action")
-                        cbAction.Items.Add(values.word);
+                        listBox_action.Items.Add(values.word);
                     else if (item.type == "target")
-                        cbTarget.Items.Add(values.word);
+                        listBox_target.Items.Add(values.word);
                 }
             }
         }
 
+        bool ON = false;
 
         private void accept_bt_Click(object sender, RoutedEventArgs e)
         {
-            dataContext.Accept = instance.StartRecord();
-
-            dataContext.Text = instance.Result;
-
+            if (!ON)
+            {
+                dataContext.Accept = instance.StartRecord();
+                ON = true;
+            }
+            else
+            {
+                dataContext.Accept = instance.StopRecord();
+                dataContext.Text = instance.Result;
+                ON = false;
+            }
         }
 
         private void apply_btn_Click(object sender, RoutedEventArgs e)
         {
             MenuFacade facade = new MenuFacade();             
 
-            if (dataContext.TabControlName.SelectedItem == TabLearnig)
+            if (dataContext.TabControlName.SelectedIndex == 1)
             {
-                if (cbTarget.Text == "" && cbAction.Text == "")
+                if (listBox_target.SelectedItem.ToString() == "" && listBox_action.SelectedItem.ToString() == "")
                 {
                     MessageBox.Show("Выберите действия!", "Ошибка ввода!", MessageBoxButton.OK, MessageBoxImage.Stop);
                     return;
                 }
-                facade.Run(cbAction.Text.ToLower() + ' ' + cbTarget.Text.ToLower(), dataContext);
+                facade.Run(listBox_action.SelectedItem.ToString().ToLower() + ' ' + listBox_target.SelectedItem.ToString().ToLower(), dataContext);
 
                 Word.Write();
             }
@@ -95,7 +105,8 @@ namespace KharGo
         {
             if (MessageBox.Show("Ви хотите применить эту команду?", "Вопрос", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
-                dataContext.Text = dataContext.CommandList[((ListBox)sender).SelectedIndex];
+                dataContext.Text = dataContext.CommandList[((ListBox)sender).SelectedIndex].Split('-')[0].Trim();
+                apply_btn_Click(null, null);
             }
         }
     }

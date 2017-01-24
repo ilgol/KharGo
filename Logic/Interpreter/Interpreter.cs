@@ -115,13 +115,14 @@ namespace Logic.Intepreter
             return result;
         }
 
-        public string LearnTwoWordCommand(string Text)
+        public string LearnTwoWordCommand(string Text, string originalText)
         {
             //обучение новой строки при явному указании команды во вкладке обучение
             //работает только для строки из двух слов: action & target или наоборот !!
+            result = TryToRecognize(Text.Split(' ').ToList());
             List<string> temp = new List<string>() { "", "" };
             List<string> wordssimilarity = new List<string>();
-            List<string> words = Text.ToLower().Split(' ').ToList();
+            List<string> words = originalText.ToLower().Split(' ').ToList();
             foreach (var item in words)
             {
                 double counter0 = 0;

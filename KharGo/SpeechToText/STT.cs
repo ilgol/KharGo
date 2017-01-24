@@ -22,17 +22,14 @@ namespace KharGo.SpeechToText
         WaveIn waveIn;
         WaveFileWriter writer;
         string outputFilename = "demo.wav";
-        bool ON = false;
         List<VoiceCommand> cmd = new List<VoiceCommand>();
         SpeechSynthesizer synth = new SpeechSynthesizer();
-
         public string Result { get; set; }
 
         private STT()
         {
             dispatcherTimer = new DispatcherTimer();
             dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
-            dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 100);
         }
         public static STT getInstance()
         {
@@ -48,13 +45,14 @@ namespace KharGo.SpeechToText
 
         void waveIn_RecordingStopped(object sender, EventArgs e)
         {
-            waveIn.Dispose();
-            waveIn = null;
-            writer.Close();
-            writer = null;
+            if (waveIn != null)
+            {
+                waveIn.Dispose();
+                waveIn = null;
+                writer.Close();
+                writer = null;
+            }
         }
-
-
 
         void dispatcherTimer_Tick(object sender, EventArgs e)
         {
@@ -99,27 +97,24 @@ namespace KharGo.SpeechToText
         public string StartRecord()
         {
             var resultname = "";
-            if (ON == false)
-            {
-                waveIn = new WaveIn();
-                waveIn.DeviceNumber = 0;
-                waveIn.DataAvailable += waveIn_DataAvailable;
-                waveIn.RecordingStopped += new EventHandler<StoppedEventArgs>(waveIn_RecordingStopped);
-                waveIn.WaveFormat = new WaveFormat(16000, 1);
-                writer = new WaveFileWriter(outputFilename, waveIn.WaveFormat);
-                resultname = "Стоп";
-                waveIn.StartRecording();
-                ON = true;
-            }
-            else
-            {
-                waveIn.StopRecording();
-                ON = false;
-                resultname = "Сказать команду";
-                dispatcherTimer.Start();
-            }
-
+            waveIn = new WaveIn();
+            waveIn.DeviceNumber = 0;
+            waveIn.DataAvailable += waveIn_DataAvailable;
+            waveIn.RecordingStopped += new EventHandler<StoppedEventArgs>(waveIn_RecordingStopped);
+            waveIn.WaveFormat = new WaveFormat(16000, 1);
+            writer = new WaveFileWriter(outputFilename, waveIn.WaveFormat);
+            resultname = "Стоп";
+            waveIn.StartRecording();
             return resultname;
+        }
+
+        public string StopRecord()
+        {
+            var resultname = "";
+            waveIn_RecordingStopped(null,null);
+            resultname = "Сказать команду";
+            dispatcherTimer_Tick(null, null);
+            return resultname;            
         }
     }
 }

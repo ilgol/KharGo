@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Logic.Command;
+﻿using Logic.Command;
 
 namespace Logic.Strategy
 {
@@ -17,7 +16,7 @@ namespace Logic.Strategy
                     result = new StopCommand(context.Split(' ')[1]);
                     break;
                 default:
-                    break;
+                   break;
             }
             return result;
         }

@@ -11,6 +11,7 @@ namespace Logic.Command
         {
             _exename = exename;
         }
+
         public override void Execute()
         {
             // Prepare the process to run
@@ -27,6 +28,7 @@ namespace Logic.Command
             }
             catch { MessageBox.Show("Не удается открыть файл", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error); }
         }
+
         public override void Undo()
         {
             

@@ -6,6 +6,8 @@ using KharGo.MVVM;
 using KharGo.SpeechToText;
 using System.Windows;
 using System.Windows.Controls;
+using System.Collections.Generic;
+using System;
 
 namespace KharGo.Facade
 {
@@ -20,9 +22,9 @@ namespace KharGo.Facade
             _invoker = new Invoker();
             _interpreter = new Interpreter(command.ToLower());
 
-            if (dataContext.Text.ToLower().Split(' ').ToList().Count == 2 && dataContext.TabControlName.SelectedItem.ToString() == "TabLearning")
+            if (dataContext.Text.ToLower().Split(' ').ToList().Count == 2 && dataContext.TabControlName.SelectedIndex == 1)
             {
-                _interpreter.LearnTwoWordCommand(dataContext.Text);
+                _interpreter.LearnTwoWordCommand(command, dataContext.Text);
             }
 
             _context = new Context(_interpreter.Execute());
@@ -43,7 +45,14 @@ namespace KharGo.Facade
             _invoker.SetCommand(result);
             _invoker.Run();
 
-            dataContext.CommandList.Add(dataContext.Text);
+            List<string> temp = new List<string>();
+            temp.AddRange(dataContext.CommandList);
+
+            dataContext.CommandList = new List<string>();
+
+            temp.Add(dataContext.Text + " ---> " + DateTime.Now);
+
+            dataContext.CommandList = temp;
             dataContext.Text = "";
         }
     }

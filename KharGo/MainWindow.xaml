@@ -20,9 +20,9 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="5"/>
-            <ColumnDefinition Width="190*"/>
+            <ColumnDefinition Width="185*"/>
             <ColumnDefinition Width="5"/>
-            <ColumnDefinition Width="181*"/>
+            <ColumnDefinition Width="185*"/>
             <ColumnDefinition Width="5"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -52,6 +52,9 @@
         <TabControl x:Name="tabcontrol" Grid.Column="1" Height="310" Grid.Row="1" VerticalAlignment="Top" Grid.ColumnSpan="3">
             <TabItem Header="Команды">
                 <Grid Background="White">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="5"/>
                         <RowDefinition Height="37"/>
@@ -59,16 +62,27 @@
                         <RowDefinition/>
                     </Grid.RowDefinitions>
                     <TextBlock Text="Команда..." Foreground="{StaticResource brushWatermarkForeground}"
-                       Visibility="{Binding Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=execute_tb}"  Grid.Row="1" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                    <TextBox x:Name="execute_tb" Text="{Binding Text, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" BorderBrush="{StaticResource brushWatermarkBorder}" Background="Transparent" Height="35" TextWrapping="Wrap" VerticalAlignment="Center" Grid.Row="1" VerticalContentAlignment="Center"/>
-                    <ListBox ItemsSource="{Binding CommandList, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Grid.Row="3" MouseDoubleClick="rules_lb_MouseDoubleClick"></ListBox>
+                       Visibility="{Binding Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=execute_tb}"  Grid.Row="1" VerticalAlignment="Center" Margin="5,7,0,6"/>
+                    <TextBox x:Name="execute_tb" Text="{Binding Text, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" BorderBrush="{StaticResource brushWatermarkBorder}" Background="Transparent" Height="35" TextWrapping="Wrap" VerticalAlignment="Bottom" Grid.Row="1" VerticalContentAlignment="Center" TabIndex="1"/>
+                    <ListBox ItemsSource="{Binding CommandList, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Grid.Row="3" MouseDoubleClick="rules_lb_MouseDoubleClick"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Обучение" Name="TabLearnig">
                 <Grid Background="White">
-                    <ComboBox x:Name="cbAction" HorizontalAlignment="Left" Margin="72,77,0,0" VerticalAlignment="Top" Width="120"/>
-                    <ComboBox x:Name="cbTarget" HorizontalAlignment="Left" Margin="252,77,0,0" VerticalAlignment="Top" Width="120"/>
-                    <ComboBox x:Name="comboBox" HorizontalAlignment="Left" Margin="432,77,0,0" VerticalAlignment="Top" Width="120"/>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="5*"/>
+                        <RowDefinition Height="126*"/>
+                        <RowDefinition Height="5*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="368*"/>
+                        <ColumnDefinition Width="5*"/>
+                        <ColumnDefinition Width="368*"/>
+                    </Grid.ColumnDefinitions>
+                    <!--<ComboBox x:Name="cbAction" HorizontalAlignment="Left" Margin="113,189,0,0" VerticalAlignment="Top" Width="120" Grid.Row="1"/>
+                    <ComboBox x:Name="cbTarget" HorizontalAlignment="Left" Margin="142.121,69,0,0" VerticalAlignment="Top" Width="120" Grid.Column="3" Grid.Row="1"/>-->
+                    <ListBox x:Name="listBox_action" Grid.Row="1" TabIndex="4"/>
+                    <ListBox x:Name="listBox_target" Grid.Column="2" TabIndex="5" Grid.Row="1"/>
                 </Grid>
             </TabItem>
         </TabControl>
